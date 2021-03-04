@@ -1,0 +1,18 @@
+{
+    "rules": [
+        {
+            "name": "NameOfYourRuleGoesHere_NoSpaces",
+            "targetRole": "role name to remove",
+            "dependsOn": ["dependent role name 1", "dependent role name 2"],
+            "joinWith": "or",
+            "whitelistByUserId": [
+                "12345",
+                "If none, use empty array: []"
+            ],
+            "whitelistByRoleName": [
+                "role name on usre that rule will not target even if they have the targetRole on them, e.g.: admin",
+                "If none, use empty array: []"
+            ]
+        }
+    ]
+}
