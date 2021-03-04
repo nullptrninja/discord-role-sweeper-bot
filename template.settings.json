@@ -1,0 +1,13 @@
+{
+    "token": "YOUR TOKEN HERE",
+    "guildId": "YOUR SERVER ID HERE",
+    "postLogsToChannelId": "LOGGING CHANNEL ID, OR EMPTY",
+    "command": {
+        "longTriggerWord": "purge!"
+    },
+    "allowedUsersById": [
+        "USER ID OF WHO CAN RUN COMMANDS ON THIS BOT",
+        "ANOTHER USER ID HERE"
+    ],
+    "rulesFile": "currentRules.json"
+}
