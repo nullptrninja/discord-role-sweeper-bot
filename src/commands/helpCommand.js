@@ -14,6 +14,7 @@ class HelpCommand {
 \`\`\`Available commands:\n
 list: Lists rules or victims\n
 clean: Cleans up roles based on rules\n
+add: Adds a new rule
 \`\`\``;
     }
 

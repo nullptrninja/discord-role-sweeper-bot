@@ -6,6 +6,7 @@ const RulesData = require("./rulesData");
 const HelpCommand = require('./commands/helpCommand');
 const ListCommand = require("./commands/listCommand");
 const CleanUpCommand = require("./commands/cleanUpCommand");
+const AddRuleCommand = require("./commands/addRuleCommand");
 
 const client = new Discord.Client();
 const settings = JSON.parse(fs.readFileSync("production.settings.json"));
@@ -17,7 +18,8 @@ const rulesData = new RulesData(settings.rulesFile);
 const cmdletDefinitions = [
     new HelpCommand(settings),
     new ListCommand(settings),
-    new CleanUpCommand(settings)
+    new CleanUpCommand(settings),
+    new AddRuleCommand(settings)
 ];
 
 const cmdProcessor = new CommandProcessor(rulesData, cmdletDefinitions, client, settings);
@@ -40,10 +42,13 @@ function executeCommand(fullCommandString, channel) {
             console.log(err);
 
             if (!_.isEmpty(settings.postLogsToChannelId)) {
-                const channel = await client.channels.fetch(settings.postLogsToChannelId)
-                if (channel) {
-                    channel.send(err.message);
+                const privateLogChannel = await client.channels.fetch(settings.postLogsToChannelId)
+                if (privateLogChannel) {
+                    privateLogChannel.send(err);
                 }
+            }
+            else {
+                channel.send(err);
             }
         });
 }

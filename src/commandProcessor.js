@@ -1,8 +1,8 @@
 const _ = require('underscore');
 
 class CommandProcessor {
-    constructor(rulesFile, cmdlets, discordClient, settings) {
-        this.rulesData = rulesFile;
+    constructor(rulesData, cmdlets, discordClient, settings) {
+        this.rulesData = rulesData;
         this._cmdlets = cmdlets;
         this._discordClient = discordClient;
         this._settings = settings;
@@ -42,7 +42,7 @@ class CommandProcessor {
 
                 // Must meet minimum length requirements
                 if (paramTokens.length < requiredParams.length) {
-                    return { errorMessage: `We think you wanted the \`${cmdlet.name}\` command, but you're missing some parameters.` };
+                    return { errorMessage: `The \`${cmdlet.name}\` command requires more parameters.` };
                 }
 
                 var paramsTable = {};
@@ -51,47 +51,51 @@ class CommandProcessor {
                 var captureRemainderAsGlob = false;
                 for (var i = 0; i < paramTokens.length; ++i) {
                     let paramValue = paramTokens[i].toLowerCase();
+                    let paramValueNonNormalized = paramTokens[i];
 
-                    // Find all applicable parameters at this position i
-                    let applicableParams = _.filter(cmdlet.params, function(p) { return p.position === i; });
+                    // If we're not globbing we read params as normal
+                    if (captureRemainderAsGlob === false) {
+                        // Find all applicable parameters at this position i
+                        let applicableParams = _.filter(cmdlet.params, function(p) { return p.position === i; });
 
-                    if (!applicableParams) {
-                        throw `Parameter: ${paramValue} is not applicable on position: ${i}.`
-                    }
+                        if (!applicableParams) {
+                            throw `Parameter: ${paramValue} is not applicable on position: ${i}.`
+                        }
 
-                    for (var k = 0; k < applicableParams.length; ++k) {
-                        let paramSpec = cmdlet.params[k];
-                        var assignedParamValue = null;
+                        for (var k = 0; k < applicableParams.length; ++k) {
+                            let paramSpec = cmdlet.params[k];
+                            var assignedParamValue = null;
 
-                        if (paramSpec) {
-                            if (paramSpec.isGlob === false) {
-                                if (paramSpec.isSwitch === true) {
-                                    // For switches, we'll just require you to match the name of the switch to turn it on.
-                                    assignedParamValue = paramSpec.name === paramValue ? true : false;
+                            if (paramSpec) {
+                                if (paramSpec.isGlob === false) {
+                                    if (paramSpec.isSwitch === true) {
+                                        // For switches, we'll just require you to match the name of the switch to turn it on.
+                                        assignedParamValue = paramSpec.name === paramValue ? true : false;
+                                    }
+                                    else {
+                                        assignedParamValue = paramValueNonNormalized;
+                                    }
                                 }
                                 else {
-                                    assignedParamValue = paramValue;
+                                    // Globs capture the remainder of the command as long string buffer. We ignore positional asserts after this point
+                                    captureRemainderAsGlob = true;
+                                    globedParamName = paramSpec.name;
+                                    globValue = [ paramValueNonNormalized ];
+                                    continue;
                                 }
-                            }
-                            else {
-                                // Globs capture the remainder of the command as long string buffer. We ignore positional asserts after this point
-                                captureRemainderAsGlob = true;
-                                globedParamName = paramSpec.name;
-                                globValue = [ paramValue ];
-                                continue;
-                            }
 
-                            paramsTable[paramSpec.name] = assignedParamValue;
-                        }
-                        else if (captureRemainderAsGlob) {
-                            globValue.push(paramValue);
+                                paramsTable[paramSpec.name] = assignedParamValue;
+                            }
                         }
                     }
-
-                    // Concat the Glob
-                    if (captureRemainderAsGlob === true) {
-                        paramsTable[globedParamName] = globValue.join(' ');
+                    else {
+                        globValue.push(paramValueNonNormalized);
                     }
+                }
+
+                // Concat the Glob
+                if (captureRemainderAsGlob === true) {
+                    paramsTable[globedParamName] = globValue.join(' ');
                 }
 
                 return {
