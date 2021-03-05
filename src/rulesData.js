@@ -4,7 +4,24 @@ const RuleModel = require("./ruleModel");
 
 class RulesData {
     constructor(rulesFilePath) {
+        this._savePath = rulesFilePath;
         this._loadRules(rulesFilePath);
+    }
+
+    addRule(ruleModel) {
+        if (!ruleModel) {
+            console.log("Cannot add undefined rule model");
+            return;
+        }
+
+        this.rules.push(ruleModel);
+    }
+
+    saveFile() {
+        const obj = { rules: this.rules };
+        const asJson = JSON.stringify(obj, null, 4)
+        fs.writeFileSync(this._savePath, asJson);
+        console.log(`Saved rules files to: ${this._savePath}`);
     }
 
     _tryCreateBlankFile(rulesFilePath) {

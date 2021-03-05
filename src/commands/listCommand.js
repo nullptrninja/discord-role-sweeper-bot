@@ -9,17 +9,17 @@ class ListCommand {
 
         this.params = [
             { name: 'rules', isRequired: true, isSwitch: true, isGlob: false, position: 0 },
-            { name: 'victims', isRequired: true, isSwitch: true, isGlob: false, position: 0 }
+            { name: 'targets', isRequired: true, isSwitch: true, isGlob: false, position: 0 }
         ];
 
-        this.helpText = `Usage: *${settings.command.longTriggerWord} ${this.name}* [\`rules|victims\`]\n
+        this.helpText = `Usage: *${settings.command.longTriggerWord} ${this.name}* [\`rules|targets\`]\n
 \`rules\`: Shows all clean up rules\n
-\`victims\`: Shows all users that would have roles cleaned up under each defined rule. Note, this can be a large list!\n`;
+\`targets\`: Shows all users that would have roles cleaned up under each defined rule. Note, this can be a large list!\n`;
     }
 
     async asyncHandler(channel, commandContext, discordClient, cmdProc) {
         const showRules = commandContext.params['rules'];
-        const showVictims = commandContext.params['victims'];
+        const showTargets = commandContext.params['targets'];
 
         if (showRules === true) {
             const allRules = cmdProc.rulesData.rules;
@@ -33,7 +33,7 @@ class ListCommand {
 
             channel.send(`Currently configured rules:\n${mappedRules}`, { split: true });
         }
-        else if (showVictims === true) {
+        else if (showTargets === true) {
             const helper = new DiscordHelper(discordClient, this._settings);
             const allRules = cmdProc.rulesData.rules;
             const guild = await helper.getGuild();
