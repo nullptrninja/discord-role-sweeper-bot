@@ -5,11 +5,23 @@
     "command": {
         "longTriggerWord": "purge!"
     },
-    "allowedUsersByUserId": [
-        "USER ID OF WHO CAN RUN COMMANDS ON THIS BOT"
-    ],
-    "allowedUsersByRoleId": [
-        "ROLE ID OF WHO CAN RUN COMMANDS ON THIS BOT"
-    ],
+    "authz": {
+        "allowedUsersByUserId": [
+            "USER ID OF WHO CAN RUN COMMANDS ON THIS BOT"
+        ],
+        "allowedUsersByRoleId": [
+            "ROLE ID OF WHO CAN RUN COMMANDS ON THIS BOT"
+        ]
+    },
+    "timer": {
+        "enabled": false,
+        "intervalMinutes": 0,
+        "atSpecificTimes": [
+            "HH:MM"
+        ],
+        "executeCommands": [
+            "COMMANDS TO EXECUTE, EX: purge! clean"
+        ]
+    },
     "rulesFile": "currentRules.json"
 }
