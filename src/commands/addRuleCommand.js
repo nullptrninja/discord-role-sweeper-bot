@@ -39,7 +39,14 @@ class AddRuleCommand {
         var modeHandlers = {};
         modeHandlers[nameParam] = function (t) {
             if (self._verifySingleString(t)) {
-                return self._readSingleString(t);
+                const name = self._readSingleString(t);
+
+                // Check name doesn't already exist
+                if (cmdProc.rulesData.containsRule(name)) {
+                    return { error: `The rule ${name} already exists.` };
+                }
+
+                return name;
             }
             return { error: 'value cannot be empty, contain spaces, or contain multiple entries' };
         };

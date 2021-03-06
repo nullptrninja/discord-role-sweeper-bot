@@ -17,11 +17,28 @@ class RulesData {
         this.rules.push(ruleModel);
     }
 
+    removeRule(ruleName) {
+        if (!this.rules || this.rules.length === 0) {
+            return false;
+        }
+
+        this.rules = this.rules.filter(r => r.name !== ruleName);
+        return true;
+    }
+
     saveFile() {
         const obj = { rules: this.rules };
         const asJson = JSON.stringify(obj, null, 4)
         fs.writeFileSync(this._savePath, asJson);
         console.log(`Saved rules files to: ${this._savePath}`);
+    }
+
+    containsRule(name) {
+        if (!this.rules || this.rules.length === 0) {
+            return false;
+        }
+
+        return this.rules.filter(r => r.name === name).length > 0;
     }
 
     _tryCreateBlankFile(rulesFilePath) {

@@ -7,6 +7,7 @@ const HelpCommand = require('./commands/helpCommand');
 const ListCommand = require("./commands/listCommand");
 const CleanUpCommand = require("./commands/cleanUpCommand");
 const AddRuleCommand = require("./commands/addRuleCommand");
+const DeleteRuleCommand = require("./commands/deleteRuleCommand");
 
 const client = new Discord.Client();
 const settings = JSON.parse(fs.readFileSync("production.settings.json"));
@@ -19,7 +20,8 @@ const cmdletDefinitions = [
     new HelpCommand(settings),
     new ListCommand(settings),
     new CleanUpCommand(settings),
-    new AddRuleCommand(settings)
+    new AddRuleCommand(settings),
+    new DeleteRuleCommand(settings)
 ];
 
 const cmdProcessor = new CommandProcessor(rulesData, cmdletDefinitions, client, settings);
