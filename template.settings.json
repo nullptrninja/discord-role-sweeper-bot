@@ -5,9 +5,11 @@
     "command": {
         "longTriggerWord": "purge!"
     },
-    "allowedUsersById": [
-        "USER ID OF WHO CAN RUN COMMANDS ON THIS BOT",
-        "ANOTHER USER ID HERE"
+    "allowedUsersByUserId": [
+        "USER ID OF WHO CAN RUN COMMANDS ON THIS BOT"
+    ],
+    "allowedUsersByRoleId": [
+        "ROLE ID OF WHO CAN RUN COMMANDS ON THIS BOT"
     ],
     "rulesFile": "currentRules.json"
 }

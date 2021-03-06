@@ -27,6 +27,8 @@ class DeleteRuleCommand {
         }
 
         const deleteResult = cmdProc.rulesData.removeRule(ruleName);
+        cmdProc.rulesData.saveFile();
+
         if (deleteResult === true) {
             channel.send(`Removed rule: \`${ruleName}\``);
         }

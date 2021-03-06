@@ -30,9 +30,16 @@ function isLongTriggerWord(content) {
     return content.toLowerCase().startsWith(settings.command.longTriggerWord + ' ');
 }
 
-function isUserIdOnWhitelist(messageAuthor) {
-    let userId = messageAuthor.id;
-    return settings.allowedUsersById.includes(userId);
+function isUserAllowedToCommand(member) {
+    // Check whitelist ID first
+    let userId = member.user.id;
+    if (settings.allowedUsersByUserId.includes(userId)) {
+        return true;
+    }
+
+    // Try by role
+    const hasMatchingRole = member.roles.cache.filter(r => settings.allowedUsersByRoleId.includes(r));
+    return hasMatchingRole;
 }
 
 function executeCommand(fullCommandString, channel) {
@@ -71,11 +78,13 @@ client.on("message", message => {
         return;
     }
 
-    if (!isUserIdOnWhitelist(message.author)) {
+    if (!isUserAllowedToCommand(message.member)) {
         console.log(`UserId ${message.author.id} was not on the allowed users whitelist but tried to execute a command`);
         message.channel.send('You can\'t run that command');
         return;
     }
+
+
 
     executeCommand(inputCommand, message.channel);
 });

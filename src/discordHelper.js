@@ -21,7 +21,9 @@ class DiscordHelper {
         const userIdIgnoreList = ignoreUserIds || [];
         const normalizeRoleName = roleName.toLowerCase();
         const guild = await this.getGuild();
-        const role = guild.roles.cache.find(role => role.name.toLowerCase() === normalizeRoleName);
+
+        // Note: We support by role name or id
+        const role = guild.roles.cache.find(role => role.name.toLowerCase() === normalizeRoleName || role.id === roleName);
         var justTheMembersInRole = [];
         if (role) {
             justTheMembersInRole = role.members.filter(m => !userIdIgnoreList.includes(m.user.id)).map(m => m);
@@ -37,14 +39,18 @@ class DiscordHelper {
         const normalizedRoleName = roleName.toLowerCase();
         const guild = await this._client.guilds.fetch(this._settings.guildId);
         const allRoles = await guild.roles.fetch();
-        const role = allRoles.cache.find(r => r.name.toLowerCase() === normalizedRoleName);
+
+        // Note: We support by role name or id
+        const role = allRoles.cache.find(r => r.name.toLowerCase() === normalizedRoleName || r.id === normalizedRoleName);
 
         return role;
     }
 
     getRoleFromMemberByRoleName(member, roleName) {
         const normalizedRoleName = roleName.toLowerCase();
-        const role = member.roles.cache.find(role => role.name.toLowerCase() === normalizedRoleName);
+
+        // Note: We support by role name or id
+        const role = member.roles.cache.find(role => role.name.toLowerCase() === normalizedRoleName || r.id === normalizedRoleName);
         return role;
     }
 }
