@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const fs = require("fs");
-const _ = require('underscore');
 const CommandProcessor = require('./commandProcessor');
 const RulesData = require("./rulesData");
 const HelpCommand = require('./commands/helpCommand');
@@ -8,7 +7,6 @@ const ListCommand = require("./commands/listCommand");
 const CleanUpCommand = require("./commands/cleanUpCommand");
 const AddRuleCommand = require("./commands/addRuleCommand");
 const DeleteRuleCommand = require("./commands/deleteRuleCommand");
-const { delay } = require("underscore");
 
 const client = new Discord.Client();
 const settings = JSON.parse(fs.readFileSync("production.settings.json"));
@@ -52,7 +50,7 @@ async function startPollingTimers() {
             return;
         }
 
-        if (_.isEmpty(settings.postLogsToChannelId)) {
+        if (settings.postLogsToChannelId === "") {
             console.log(`Using the intervalometer requires "postLogsToChannelId" to be set to a valid channel.`);
             return;
         }
