@@ -50,18 +50,18 @@ async function startPollingTimers() {
             return;
         }
 
-        if (settings.postLogsToChannelId === "") {
+        if (settings.timer.postLogsToChannelId === "") {
             console.log(`Using the intervalometer requires "postLogsToChannelId" to be set to a valid channel.`);
             return;
         }
 
-        const privateLogChannel = await client.channels.fetch(settings.postLogsToChannelId)
+        const privateLogChannel = await client.channels.fetch(settings.timer.postLogsToChannelId)
                                                         .catch(err => {
-                                                            console.log(`Error fetching channel ID: ${settings.postLogsToChannelId}, intervalometer will not be enabled.\nError: ${err}`);
+                                                            console.log(`Error fetching channel ID: ${settings.timer.postLogsToChannelId}, intervalometer will not be enabled.\nError: ${err}`);
                                                             privateLogChannel = undefined;
                                                         });
         if (!privateLogChannel) {
-            console.log(`Intervalometer enabled but the log channel ID (postLogsToChannelId) ${settings.postLogsToChannelId} did not point to a valid channel.`);
+            console.log(`Intervalometer enabled but the log channel ID (postLogsToChannelId) ${settings.timer.postLogsToChannelId} did not point to a valid channel.`);
             return;
         }
 

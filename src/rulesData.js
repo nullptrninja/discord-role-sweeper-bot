@@ -1,5 +1,4 @@
 const fs = require("fs");
-const _ = require('underscore');
 const RuleModel = require("./ruleModel");
 
 class RulesData {
@@ -59,12 +58,12 @@ class RulesData {
         this._tryCreateBlankFile(rulesFilePath);
 
         let rawRules = JSON.parse(fs.readFileSync(rulesFilePath));
-        if (_.isUndefined(rawRules)) {
+        if (rawRules === undefined) {
             console.log(`Could not load rules data: ${rulesFilePath}`);
-            // TODO: Figure something out here
+            throw `Could not load rules file: ${rulesFilePath} - unable to continue.`
         }
 
-        this.rules = _.map(rawRules.rules, function(r) {
+        this.rules = rawRules.rules.map(r => {
             return new RuleModel(r.name, r.targetRole, r.dependsOn, r.joinWith, r.whitelistByUserId, r.whitelistByRoleName);
         });
     }

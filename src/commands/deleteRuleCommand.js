@@ -1,7 +1,3 @@
-const JoinOps = require('../joinOperator');
-const DiscordHelper = require('../discordHelper');
-const RuleModel = require('../ruleModel');
-
 class DeleteRuleCommand {
     constructor(settings) {
         this._settings = settings;

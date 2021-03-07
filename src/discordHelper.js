@@ -1,5 +1,3 @@
-const _ = require('underscore')
-
 class DiscordHelper {
     constructor(discordClient, settings) {
         this._client = discordClient;
