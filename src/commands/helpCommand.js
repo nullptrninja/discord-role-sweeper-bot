@@ -12,9 +12,10 @@ class HelpCommand {
         // from each other.
         this.helpText = `Usage: *${settings.command.longTriggerWord} ${this.name}* [command_name]\n
 \`\`\`Available commands:\n
-list: Lists rules or targets\n
-clean: Cleans up roles based on rules\n
+list: Lists rules or targets
+clean: Cleans up roles based on rules
 add: Adds a new rule
+del: Deletes a rule
 \`\`\``;
     }
 
