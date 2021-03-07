@@ -26,6 +26,7 @@ A bot that cleans up Discord Roles using a simple set of relational rules
 7. Add your bot to the server via OAuth URL. You will need the following permission on your OAuth URL: `268438528`
   - This encompases: `Manage Roles`, `View Channels`, `Send Messages`
   - Ex: https://discord.com/api/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=268438528
+  - Under the BOT menu in Discord's Bot configuration page, and enable `Presence Intent` and `Server Members Intent` permissions.
 8. When the bot joins your server, go to `Server Settings` -> `Roles` and find the role created by the bot. Move the role's position as high as you need to - this will usually be higher than the roles you plan to have the bot remove. It's not advised that you give the bot more permissions than required, for example you probably don't want to make its role higher than a "mod" role - this implies that the bot _can_ remove `mod` from someone automatically.
 9. Run `npm install`
 10. Run `node src/main.js`

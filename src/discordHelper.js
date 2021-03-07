@@ -48,7 +48,7 @@ class DiscordHelper {
         const normalizedRoleName = roleName.toLowerCase();
 
         // Note: We support by role name or id
-        const role = member.roles.cache.find(role => role.name.toLowerCase() === normalizedRoleName || r.id === normalizedRoleName);
+        const role = member.roles.cache.find(role => role.name.toLowerCase() === normalizedRoleName || role.id === normalizedRoleName);
         return role;
     }
 }

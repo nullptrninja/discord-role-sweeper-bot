@@ -10,7 +10,7 @@ class DeleteRuleCommand {
             { name: 'ruleName', isRequired: true, isSwitch: false, isGlob: false, position: 0 },
         ];
 
-        this.helpText = `Usage: *${settings.command.longTriggerWord} ${this.name} \`rule_name\`
+        this.helpText = `Usage: ${settings.command.longTriggerWord} ${this.name} \`rule_name\`
 \`ruleName\`: the name of the rule to delete. Rule names cannot have spaces.\n`;
     }
 
