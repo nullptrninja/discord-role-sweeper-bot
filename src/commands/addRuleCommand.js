@@ -1,5 +1,4 @@
 const JoinOps = require('../joinOperator');
-const DiscordHelper = require('../discordHelper');
 const RuleModel = require('../ruleModel');
 
 const nameParam = '-n';

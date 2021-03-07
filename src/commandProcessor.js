@@ -10,7 +10,7 @@ class CommandProcessor {
 
     getCmdletDefinition(cmdletName) {
         let cmdletToLower = cmdletName.toLowerCase();
-        return _.find(this._cmdlets, function(cmd) {
+        return this._cmdlets.find(cmd => {
             return cmd.name === cmdletToLower;
         });
     }
@@ -33,7 +33,7 @@ class CommandProcessor {
             let cmdlet = this.getCmdletDefinition(tokens[1]);
             if (cmdlet) {
                 let paramTokens = tokens.slice(2);
-                let requiredParams = _.uniq(_.filter(cmdlet.params, function(c) {
+                let requiredParams = _.uniq(cmdlet.params.filter(c => {
                                                  return c.isRequired === true;
                                             }),
                                             function(param) {
@@ -56,7 +56,7 @@ class CommandProcessor {
                     // If we're not globbing we read params as normal
                     if (captureRemainderAsGlob === false) {
                         // Find all applicable parameters at this position i
-                        let applicableParams = _.filter(cmdlet.params, function(p) { return p.position === i; });
+                        let applicableParams = cmdlet.params.filter(p => { return p.position === i; });
 
                         if (!applicableParams) {
                             throw `Parameter: ${paramValue} is not applicable on position: ${i}.`

@@ -1,5 +1,3 @@
-const { builtinModules } = require("module");
-
 class RuleModel {
     constructor(name, roleNameToAffect, dependentRoleNames, joinOperator, whitelistUserIds, whitelistByRoleName) {
         this.name = name;

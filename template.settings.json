@@ -1,7 +1,6 @@
 {
     "token": "YOUR TOKEN HERE",
     "guildId": "YOUR SERVER ID HERE",
-    "postLogsToChannelId": "LOGGING CHANNEL ID, OR EMPTY",
     "command": {
         "longTriggerWord": "purge!"
     },
@@ -15,6 +14,7 @@
     },
     "timer": {
         "enabled": false,
+        "postLogsToChannelId": "LOGGING CHANNEL ID, OR EMPTY",
         "intervalMinutes": 0,
         "atSpecificTimes": [
             "HH:MM"
