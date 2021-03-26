@@ -63,7 +63,7 @@ class CommandProcessor {
                         }
 
                         for (var k = 0; k < applicableParams.length; ++k) {
-                            let paramSpec = cmdlet.params[k];
+                            let paramSpec = applicableParams[k];
                             var assignedParamValue = null;
 
                             if (paramSpec) {
